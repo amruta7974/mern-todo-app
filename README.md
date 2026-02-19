@@ -1,10 +1,21 @@
-## Todo App (MERN Stack)
+# MERN Todo App
 
-A full‑stack Todo application built with:
+A full-stack Todo application built with:
 - **Backend:** Node.js, Express, MongoDB (Mongoose), JWT authentication, Zod validation
 - **Frontend:** React, Vite, React Router, Tailwind CSS, Axios, react-hot-toast
 
 Users can sign up, log in, and manage their own todos. Each todo is linked to the authenticated user.
+
+---
+
+## Features
+
+- User signup and login
+- JWT authentication with HTTP-only cookies
+- Protected routes
+- Create, update, delete todos
+- Per-user todo storage
+- Form validation using Zod
 
 ---
 
@@ -180,9 +191,21 @@ From the `frontend/` directory:
 
 ---
 
+## Screenshots
+
+screenshots/signup.png
+screenshots/login.png
+screenshots/dashboard.png
+
+
 ## Notes
 
 - Make sure MongoDB is running and the `MONGODB_URI` is valid.
 - Keep your `.env` file private and never commit it to version control.
 - If you change backend ports or URLs, update `.env` and/or frontend API URLs accordingly.
 
+---
+
+## Author
+
+Built by Amruta Gaikwad
