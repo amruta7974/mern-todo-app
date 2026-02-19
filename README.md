@@ -191,11 +191,17 @@ From the `frontend/` directory:
 
 ---
 
+
 ## Screenshots
 
-screenshots/signup.png
-screenshots/login.png
-screenshots/dashboard.png
+### Signup Page
+![Signup](./screenshots/signup.png)
+
+### Login Page
+![Login](./screenshots/login.png)
+
+### Todo Dashboard
+![Dashboard](./screenshots/tododashbooard.png)
 
 
 ## Notes
