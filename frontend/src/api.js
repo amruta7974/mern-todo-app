@@ -1,8 +1,10 @@
 import axios from "axios";
 
-const API = axios.create({
-  baseURL: import.meta.env.VITE_BACKEND_URL,
-  withCredentials: true,
+// Base URL of your backend
+export const API = axios.create({
+  baseURL: "https://todo-backend-uzxl.onrender.com", // your deployed backend
+  withCredentials: true, // allows sending cookies
+  headers: {
+    "Content-Type": "application/json",
+  },
 });
-
-export default API;
