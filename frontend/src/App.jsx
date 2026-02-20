@@ -6,6 +6,7 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import PageNotFound from "./components/PageNotFound";
 import { Toaster } from "react-hot-toast";
 import axios from "axios";
+import API from "./api";
 
 function App() {
   const [isAuth, setIsAuth] = useState(null);
