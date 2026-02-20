@@ -12,7 +12,7 @@ function App() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:4001/user/me", { withCredentials: true })
+      .get("https://todo-backend-uzxl.onrender.com/user/me", { withCredentials: true })
       .then(() => setIsAuth(true))
       .catch(() => setIsAuth(false));
   }, []);
