@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
+import API from "../api";
 function Signup() {
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
