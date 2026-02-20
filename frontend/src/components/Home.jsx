@@ -13,7 +13,7 @@ function Home() {
     const fetchtodos = async () => {
       try {
         setLoading(true);
-        const response = await axios.get("https://todo-backend-uzxl.onrender.com/todo/fetch", {
+        const response = await API.get("/todo/fetch", {
           withCredentials: true,
           
           headers: {
@@ -35,8 +35,8 @@ function Home() {
   const todoCreate = async () => {
     if (!newTodo) return;
     try {
-      const response = await axios.post(
-        "https://todo-backend-uzxl.onrender.com/todo/create",
+      const response = await API.post(
+        "/todo/create",
         {
           text: newTodo,
           completed: false,
@@ -56,8 +56,8 @@ function Home() {
   const todoStatus = async (id) => {
     const todo = todos.find((t) => t._id === id);
     try {
-      const response = await axios.put(
-        `https://todo-backend-uzxl.onrender.com/todo/update/${id}`,
+      const response = await API.put(
+        `/todo/update/${id}`,
         {
           ...todo,
           completed: !todo.completed,
@@ -75,7 +75,7 @@ function Home() {
 
   const todoDelete = async (id) => {
     try {
-      await axios.delete(`https://todo-backend-uzxl.onrender.com/todo/delete/${id}`, {
+      await axios.API(`/todo/delete/${id}`, {
         withCredentials: true,
       });
       setTodos(todos.filter((t) => t._id !== id));
@@ -87,7 +87,7 @@ function Home() {
   const navigateTo = useNavigate();
   const logout = async () => {
     try {
-      await axios.get("https://todo-backend-uzxl.onrender.com/user/logout", {
+      await axios.API("/user/logout", {
         withCredentials: true,
       });
       toast.success("User logged out successfully");

@@ -13,8 +13,8 @@ function Login({ setAuth }) {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post(
-        "https://todo-backend-uzxl.onrender.com/user/login",
+      const { data } = await API.post(
+        "/user/login",
         { email, password },
         {
           withCredentials: true,

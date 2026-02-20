@@ -12,8 +12,8 @@ function Signup() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const { data } = await axios.post(
-        "https://todo-backend-uzxl.onrender.com/user/signup",
+      const { data } = await API.post(
+        "/user/signup",
         {
           username,
           email,

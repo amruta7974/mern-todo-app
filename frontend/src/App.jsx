@@ -11,8 +11,8 @@ function App() {
   const [isAuth, setIsAuth] = useState(null);
 
   useEffect(() => {
-    axios
-      .get("https://todo-backend-uzxl.onrender.com/user/me", { withCredentials: true })
+    API
+      .get("/user/me", { withCredentials: true })
       .then(() => setIsAuth(true))
       .catch(() => setIsAuth(false));
   }, []);
