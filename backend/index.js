@@ -12,31 +12,28 @@ dotenv.config();
 const PORT = process.env.PORT || 4002;
 const DB_URI = process.env.MONGODB_URI;
 
-// Allowed origins: local dev + deployed frontend
-const allowedOrigins = [
-  "http://localhost:5173", // Local development
-  "https://mern-todo-o1pcnqdyu-amrutas-projects-2a7a7151.vercel.app", // Deployed frontend
-];
-
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
     origin: function (origin, callback) {
-      // allow requests with no origin (like Postman or mobile apps)
       if (!origin) return callback(null, true);
-      if (allowedOrigins.indexOf(origin) === -1) {
-        const msg =
-          "The CORS policy for this site does not allow access from the specified Origin.";
-        return callback(new Error(msg), false);
+
+      // Allow localhost
+      if (origin === "http://localhost:5173") {
+        return callback(null, true);
       }
-      return callback(null, true);
+
+      // Allow ANY Vercel deployment
+      if (origin.endsWith(".vercel.app")) {
+        return callback(null, true);
+      }
+
+      return callback(new Error("Not allowed by CORS"));
     },
-    credentials: true, // required for cookies
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
+    credentials: true,
+  }),
 );
 
 // Database connection
