@@ -18,11 +18,13 @@ function Login({ setAuth }) {
         "/user/login",
         { email, password },
         {
-          withCredentials: true,
+          
           
           headers: { "Content-Type": "application/json" },
         }
       );
+
+      localStorage.setItem("token", data.token);
 
       // Update auth state in parent (App.jsx)
       setAuth(true);
