@@ -4,9 +4,10 @@ import dotenv from "dotenv";
 import cors from "cors";
 import todoRoute from "../backend/routes/todo.route.js";
 import userRoute from "../backend/routes/user.route.js";
-import cookieParser from "cookie-parser";
+
 
 const app = express();
+app.set("trust proxy", 1); 
 dotenv.config();
 
 const PORT = process.env.PORT || 4002;
@@ -14,7 +15,7 @@ const DB_URI = process.env.MONGODB_URI;
 
 // Middlewares
 app.use(express.json());
-app.use(cookieParser());
+
 app.use(
   cors({
     origin: function (origin, callback) {

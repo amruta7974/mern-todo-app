@@ -1,7 +1,7 @@
 import User from "../model/user.model.js";
 import { z } from "zod";
 import bcrypt from "bcryptjs";
-import { generateTokenAndSaveInCookies } from "../jwt/token.js";
+import { generateToken } from "../jwt/token.js";
 
 const userSchema = z.object({
   email: z.string().email({ message: "Invalid email address" }),
@@ -60,7 +60,7 @@ export const login = async (req, res) => {
     if (!user || !(await bcrypt.compare(password, user.password))) {
       return res.status(400).json({ errors: "Invalid email or password" });
     }
-    const token = await generateTokenAndSaveInCookies(user._id, res);
+    const token = generateToken(user._id);
     res
       .status(200)
       .json({ message: "User logged in successfully", user, token });
@@ -73,8 +73,12 @@ export const login = async (req, res) => {
 export const logout = (req, res) => {
   try {
     res.clearCookie("jwt", {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
       path: "/",
     });
+
     res.status(200).json({ message: "User logged out successfully" });
   } catch (error) {
     console.log(error);
