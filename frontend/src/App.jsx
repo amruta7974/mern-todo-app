@@ -13,7 +13,7 @@ function App() {
 
   useEffect(() => {
     API
-      .get("/user/me", { withCredentials: true })
+      .get("/user/me", )
       .then(() => setIsAuth(true))
       .catch(() => setIsAuth(false));
   }, []);

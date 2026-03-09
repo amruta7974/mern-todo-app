@@ -14,7 +14,7 @@ function Home() {
       try {
         setLoading(true);
         const response = await API.get("/todo/fetch", {
-          withCredentials: true,
+          
           
           headers: {
             "Content-Type": "application/json",
@@ -42,7 +42,7 @@ function Home() {
           completed: false,
         },
         {
-          withCredentials: true,
+         
         }
       );
       console.log(response.data.newTodo);
@@ -63,7 +63,7 @@ function Home() {
           completed: !todo.completed,
         },
         {
-          withCredentials: true,
+         
         }
       );
       console.log(response.data.todo);
@@ -75,8 +75,8 @@ function Home() {
 
   const todoDelete = async (id) => {
     try {
-      await axios.API(`/todo/delete/${id}`, {
-        withCredentials: true,
+      await API.delete(`/todo/delete/${id}`, {
+        
       });
       setTodos(todos.filter((t) => t._id !== id));
     } catch (error) {
@@ -87,8 +87,8 @@ function Home() {
   const navigateTo = useNavigate();
   const logout = async () => {
     try {
-      await axios.API("/user/logout", {
-        withCredentials: true,
+      await API.post("/user/logout", {
+       
       });
       toast.success("User logged out successfully");
       navigateTo("/login");
@@ -109,7 +109,7 @@ function Home() {
           placeholder="Add a new todo"
           value={newTodo}
           onChange={(e) => setNewTodo(e.target.value)}
-          onKeyPress={(e) => e.key === "Enter" && todoCreate()}
+          onKeyDown={(e) => e.key === "Enter" && todoCreate()}
           className="flex-grow p-2 border rounded-l-md focus:outline-none"
         />
         <button

@@ -21,7 +21,7 @@ function Signup() {
           password,
         },
         {
-          withCredentials: true,
+          
           headers: {
             "Content-Type": "application/json",
           },

@@ -29,19 +29,26 @@ export const register = async (req, res) => {
     }
 
     const user = await User.findOne({ email });
+
     if (user) {
       return res.status(400).json({ errors: "User already registered" });
     }
 
     const hashPassword = await bcrypt.hash(password, 10);
-    const newUser = new User({ email, username, password: hashPassword });
+
+    const newUser = new User({
+      email,
+      username,
+      password: hashPassword,
+    });
+
     await newUser.save();
 
-    const token = await generateTokenAndSaveInCookies(newUser._id, res);
+    const token = generateToken(newUser._id);
 
     res.status(201).json({
       message: "User registered successfully",
-      newUser,
+      user: newUser,
       token,
     });
   } catch (error) {
@@ -72,16 +79,8 @@ export const login = async (req, res) => {
 
 export const logout = (req, res) => {
   try {
-    res.clearCookie("jwt", {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
-      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-      path: "/",
-    });
-
     res.status(200).json({ message: "User logged out successfully" });
   } catch (error) {
-    console.log(error);
     res.status(500).json({ message: "Error logging out user" });
   }
 };
