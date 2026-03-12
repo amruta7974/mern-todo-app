@@ -90,7 +90,7 @@ function Home() {
   const remainingTodos = todos.filter((todo) => !todo.completed).length;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#F0DAC5] px-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#debfa2] px-4">
       <div className="w-full max-w-xl bg-[#1C2340] text-white rounded-xl shadow-2xl p-8">
         <h1 className="text-3xl font-bold text-center mb-6">My Todo List</h1>
 
@@ -101,7 +101,7 @@ function Home() {
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && todoCreate()}
-            className="flex-grow p-3 rounded-l-md text-[#1C2340] focus:outline-none"
+            className="flex-grow p-3 rounded-l-md text-[#ebedf6] focus:outline-none"
           />
 
           <button
@@ -128,7 +128,7 @@ function Home() {
             {todos.map((todo, index) => (
               <li
                 key={todo._id || index}
-                className="flex items-center justify-between p-3 bg-[#F0DAC5] text-[#1C2340] rounded-md shadow-sm"
+                className="flex items-center justify-between p-3 bg-[#F0DAC5] text-[#ebedf6] rounded-md shadow-sm"
               >
                 <div className="flex items-center">
                   <input

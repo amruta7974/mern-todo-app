@@ -65,7 +65,7 @@ return (
             value={username}
             onChange={(e) => setUserName(e.target.value)}
             placeholder="Enter username"
-            className="w-full p-3 rounded-md text-[#1C2340] focus:outline-none"
+            className="w-full p-3 rounded-md text-[#ebedf6] focus:outline-none"
           />
         </div>
 
@@ -79,7 +79,7 @@ return (
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter email"
-            className="w-full p-3 rounded-md text-[#1C2340] focus:outline-none"
+            className="w-full p-3 rounded-md text-[#ebedf6] focus:outline-none"
           />
         </div>
 
@@ -93,7 +93,7 @@ return (
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
-            className="w-full p-3 rounded-md text-[#1C2340] focus:outline-none"
+            className="w-full p-3 rounded-md text-[#ebedf6] focus:outline-none"
           />
         </div>
 
