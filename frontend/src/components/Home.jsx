@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import API from "../api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
@@ -14,8 +13,6 @@ function Home() {
       try {
         setLoading(true);
         const response = await API.get("/todo/fetch", {
-          
-          
           headers: {
             "Content-Type": "application/json",
           },
@@ -41,9 +38,7 @@ function Home() {
           text: newTodo,
           completed: false,
         },
-        {
-         
-        }
+        
       );
       console.log(response.data.newTodo);
       setTodos([...todos, response.data.newTodo]);
@@ -62,9 +57,7 @@ function Home() {
           ...todo,
           completed: !todo.completed,
         },
-        {
-         
-        }
+       
       );
       console.log(response.data.todo);
       setTodos(todos.map((t) => (t._id === id ? response.data.todo : t)));
@@ -75,9 +68,7 @@ function Home() {
 
   const todoDelete = async (id) => {
     try {
-      await API.delete(`/todo/delete/${id}`, {
-        
-      });
+      await API.delete(`/todo/delete/${id}`);
       setTodos(todos.filter((t) => t._id !== id));
     } catch (error) {
       setError("Failed to Delete Todo");
@@ -87,12 +78,10 @@ function Home() {
   const navigateTo = useNavigate();
   const logout = async () => {
     try {
-      await API.post("/user/logout", {
-       
-      });
+      await API.post("/user/logout");
       toast.success("User logged out successfully");
       navigateTo("/login");
-      localStorage.removeItem("jwt");
+     localStorage.removeItem("token");
     } catch (error) {
       toast.error("Error logging out");
     }
@@ -101,74 +90,85 @@ function Home() {
   const remainingTodos = todos.filter((todo) => !todo.completed).length;
 
   return (
-    <div className=" my-10 bg-gray-100 max-w-lg lg:max-w-xl rounded-lg shadow-lg mx-8 sm:mx-auto p-6">
-      <h1 className="text-2xl font-semibold text-center">Todo App</h1>
-      <div className="flex mb-4">
-        <input
-          type="text"
-          placeholder="Add a new todo"
-          value={newTodo}
-          onChange={(e) => setNewTodo(e.target.value)}
-          onKeyDown={(e) => e.key === "Enter" && todoCreate()}
-          className="flex-grow p-2 border rounded-l-md focus:outline-none"
-        />
+    <div className="min-h-screen flex items-center justify-center bg-[#F0DAC5] px-4">
+      <div className="w-full max-w-xl bg-[#1C2340] text-white rounded-xl shadow-2xl p-8">
+        <h1 className="text-3xl font-bold text-center mb-6">My Todo List</h1>
+
+        <div className="flex mb-6">
+          <input
+            type="text"
+            placeholder="Add a new todo..."
+            value={newTodo}
+            onChange={(e) => setNewTodo(e.target.value)}
+            onKeyDown={(e) => e.key === "Enter" && todoCreate()}
+            className="flex-grow p-3 rounded-l-md text-[#1C2340] focus:outline-none"
+          />
+
+          <button
+            onClick={todoCreate}
+            className="bg-[#50223C] hover:bg-[#3e1a2f] px-5 py-3 rounded-r-md font-semibold transition duration-300"
+          >
+            Add
+          </button>
+        </div>
+
+        {loading ? (
+          <div className="flex justify-center py-10">
+            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-white"></div>
+          </div>
+        ) : error ? (
+          <div className="text-center text-red-400 font-semibold">{error}</div>
+        ) : todos.length === 0 ? (
+          <div className="text-center py-10 text-gray-300">
+            <p className="text-lg font-semibold">No todos yet</p>
+            <p className="text-sm">Add your first task to get started 🚀</p>
+          </div>
+        ) : (
+          <ul className="space-y-3">
+            {todos.map((todo, index) => (
+              <li
+                key={todo._id || index}
+                className="flex items-center justify-between p-3 bg-[#F0DAC5] text-[#1C2340] rounded-md shadow-sm"
+              >
+                <div className="flex items-center">
+                  <input
+                    type="checkbox"
+                    checked={todo.completed}
+                    onChange={() => todoStatus(todo._id)}
+                    className="mr-3 h-4 w-4"
+                  />
+
+                  <span
+                    className={`${
+                      todo.completed ? "line-through opacity-60" : "font-medium"
+                    }`}
+                  >
+                    {todo.text}
+                  </span>
+                </div>
+
+                <button
+                  onClick={() => todoDelete(todo._id)}
+                  className="text-[#50223C] hover:text-red-700 font-semibold transition"
+                >
+                  Delete
+                </button>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <p className="mt-6 text-center text-sm text-gray-300">
+          {remainingTodos} remaining todos
+        </p>
+
         <button
-          onClick={todoCreate}
-          className="bg-blue-600 border rounded-r-md text-white px-4 py-2 hover:bg-blue-900 duration-300"
+          onClick={() => logout()}
+          className="mt-6 w-full bg-[#50223C] hover:bg-[#3e1a2f] py-2 rounded-md font-semibold transition duration-300"
         >
-          Add
+          Logout
         </button>
       </div>
-      {loading ? (
-        <div className="text-center justify-center">
-          <span className="textgray-500">Loading...</span>
-        </div>
-      ) : error ? (
-        <div className="text-center text-red-600 font-semibold">{error}</div>
-      ) : (
-        <ul className="space-y-2">
-          {todos.map((todo, index) => (
-            <li
-              key={todo._id || index}
-              className="flex items-center justify-between p-3 bg-gray-100 rounded-md"
-            >
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  checked={todo.completed}
-                  onChange={() => todoStatus(todo._id)}
-                  className="mr-2"
-                />
-                <span
-                  className={`${
-                    todo.completed
-                      ? "line-through text-gray-800 font-semibold"
-                      : ""
-                  } `}
-                >
-                  {todo.text}
-                </span>
-              </div>
-              <button
-                onClick={() => todoDelete(todo._id)}
-                className="text-red-500 hover:text-red-800 duration-300"
-              >
-                Delete
-              </button>
-            </li>
-          ))}
-        </ul>
-      )}
-
-      <p className="mt-4 text-center text-sm text-gray-700">
-        {remainingTodos} remaining todos
-      </p>
-      <button
-        onClick={() => logout()}
-        className="mt-6 px-4 py-2 bg-red-500 text-white rounded-md hover:bg-red-800 duration-500 mx-auto block"
-      >
-        Logout
-      </button>
     </div>
   );
 }

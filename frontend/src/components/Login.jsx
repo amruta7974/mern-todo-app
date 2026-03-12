@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 import { Link, useNavigate } from "react-router-dom";
@@ -50,53 +49,59 @@ function Login({ setAuth }) {
       }
     }
   };
+return (
+  <div className="flex h-screen items-center justify-center bg-[#F0DAC5] px-4">
+    <div className="w-full max-w-md p-8 bg-[#1C2340] text-white rounded-xl shadow-2xl">
 
-  return (
-    <div className="flex h-screen items-center justify-center bg-gray-100">
-      <div className="w-full max-w-md p-8 bg-white rounded-lg shadow-lg">
-        <h2 className="text-2xl font-semibold mb-5 text-center">Login</h2>
-        <form onSubmit={handleLogin}>
-          {/* Email */}
-          <div className="mb-4">
-            <label className="block mb-2 font-semibold">Email</label>
-            <input
-              type="text"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="Type Email"
-              className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+      <h2 className="text-3xl font-bold mb-6 text-center">
+        Welcome Back
+      </h2>
 
-          {/* Password */}
-          <div className="mb-4">
-            <label className="block mb-2 font-semibold">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Type Password"
-              className="w-full p-3 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
-          </div>
+      <form onSubmit={handleLogin}>
+        {/* Email */}
+        <div className="mb-5">
+          <label className="block mb-2 font-semibold">Email</label>
+          <input
+            type="text"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="Enter your email"
+            className="w-full p-3 rounded-md text-[#1C2340] focus:outline-none"
+          />
+        </div>
 
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white hover:bg-blue-900 duration-300 rounded-xl font-semibold p-3"
+        {/* Password */}
+        <div className="mb-6">
+          <label className="block mb-2 font-semibold">Password</label>
+          <input
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter your password"
+            className="w-full p-3 rounded-md text-[#1C2340] focus:outline-none"
+          />
+        </div>
+
+        <button
+          type="submit"
+          className="w-full bg-[#50223C] hover:bg-[#3e1a2f] rounded-md font-semibold p-3 transition duration-300"
+        >
+          Login
+        </button>
+
+        <p className="mt-5 text-center text-gray-300">
+          New user?{" "}
+          <Link
+            to="/signup"
+            className="text-[#F0DAC5] font-semibold hover:underline"
           >
-            Login
-          </button>
-
-          <p className="mt-4 text-center text-gray-600">
-            New user?{" "}
-            <Link to="/signup" className="text-blue-600 hover:underline">
-              Signup
-            </Link>
-          </p>
-        </form>
-      </div>
+            Signup
+          </Link>
+        </p>
+      </form>
     </div>
-  );
+  </div>
+);
 }
 
 export default Login;
