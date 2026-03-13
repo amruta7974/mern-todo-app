@@ -101,7 +101,7 @@ function Home() {
             value={newTodo}
             onChange={(e) => setNewTodo(e.target.value)}
             onKeyDown={(e) => e.key === "Enter" && todoCreate()}
-            className="flex-grow p-3 rounded-l-md text-[#ebedf6] focus:outline-none"
+            className="flex-grow p-3 rounded-l-md text-[#ebedf6] border-[#ebedf6]"
           />
 
           <button
@@ -121,14 +121,14 @@ function Home() {
         ) : todos.length === 0 ? (
           <div className="text-center py-10 text-gray-300">
             <p className="text-lg font-semibold">No todos yet</p>
-            <p className="text-sm">Add your first task to get started 🚀</p>
+            <p className="text-sm">Add your first task to get started</p>
           </div>
         ) : (
           <ul className="space-y-3">
             {todos.map((todo, index) => (
               <li
                 key={todo._id || index}
-                className="flex items-center justify-between p-3 bg-[#F0DAC5] text-[#ebedf6] rounded-md shadow-sm"
+                className="flex items-center justify-between p-3 bg-[rgb(246,242,239)] text-[#50223C] rounded-md shadow-sm"
               >
                 <div className="flex items-center">
                   <input
@@ -149,7 +149,7 @@ function Home() {
 
                 <button
                   onClick={() => todoDelete(todo._id)}
-                  className="text-[#50223C] hover:text-red-700 font-semibold transition"
+                  className="text-[#50223C] hover:bg-[#3e1a2f] font-semibold transition"
                 >
                   Delete
                 </button>

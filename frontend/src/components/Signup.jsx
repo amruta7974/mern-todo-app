@@ -47,7 +47,7 @@ function Signup() {
   };
 
 return (
-  <div className="flex h-screen items-center justify-center bg-[#F0DAC5] px-4">
+  <div className="flex h-screen items-center justify-center bg-[rgb(246,242,239)] px-4">
     <div className="w-full max-w-md p-8 bg-[#1C2340] text-white rounded-xl shadow-2xl">
 
       <h2 className="text-3xl font-bold mb-6 text-center">
@@ -65,7 +65,7 @@ return (
             value={username}
             onChange={(e) => setUserName(e.target.value)}
             placeholder="Enter username"
-            className="w-full p-3 rounded-md text-[#ebedf6] focus:outline-none"
+            className="w-full p-3 rounded-md text-[#ebedf6] border-[#ebedf6]"
           />
         </div>
 
@@ -79,7 +79,7 @@ return (
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="Enter email"
-            className="w-full p-3 rounded-md text-[#ebedf6] focus:outline-none"
+            className="w-full p-3 rounded-md text-[#ebedf6] border-[#ebedf6]"
           />
         </div>
 
@@ -93,7 +93,7 @@ return (
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             placeholder="Enter password"
-            className="w-full p-3 rounded-md text-[#ebedf6] focus:outline-none"
+            className="w-full p-3 rounded-md text-[#ebedf6] border-[#ebedf6]"
           />
         </div>
 
@@ -108,7 +108,7 @@ return (
           Already have an account?{" "}
           <Link
             to="/login"
-            className="text-[#F0DAC5] font-semibold hover:underline"
+            className="text-[#fcefe4] font-semibold hover:underline"
           >
             Login
           </Link>
