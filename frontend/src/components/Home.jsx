@@ -90,7 +90,7 @@ function Home() {
   const remainingTodos = todos.filter((todo) => !todo.completed).length;
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#debfa2] px-4">
+    <div className="min-h-screen flex items-center justify-center  bg-[rgb(246,242,239)]  px-4">
       <div className="w-full max-w-xl bg-[#1C2340] text-white rounded-xl shadow-2xl p-8">
         <h1 className="text-3xl font-bold text-center mb-6">My Todo List</h1>
 
