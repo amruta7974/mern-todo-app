@@ -149,7 +149,7 @@ function Home() {
 
                 <button
                   onClick={() => todoDelete(todo._id)}
-                  className="text-[#50223C] hover:bg-[#3e1a2f] font-semibold transition"
+                  className="text-[#50223C] font-semibold transition"
                 >
                   Delete
                 </button>
