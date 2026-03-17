@@ -1,174 +1,219 @@
 # MERN Todo App
 
-A full-stack Todo application built with:
-- **Backend:** Node.js, Express, MongoDB (Mongoose), JWT authentication, Zod validation
-- **Frontend:** React, Vite, React Router, Tailwind CSS, Axios, react-hot-toast
+![React](https://img.shields.io/badge/React-Frontend-blue)
+![Node](https://img.shields.io/badge/Node.js-Backend-green)
+![MongoDB](https://img.shields.io/badge/MongoDB-Database-darkgreen)
+![JWT](https://img.shields.io/badge/Auth-JWT-orange)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-Users can sign up, log in, and manage their own todos. Each todo is linked to the authenticated user.
+A full-stack Todo application built with the **MERN stack (MongoDB, Express, React, Node.js)**.
+
+Users can sign up, log in, and manage their personal todos securely using **JWT-based authentication**.
+
+Built with a focus on clean architecture, scalable backend design, and production-style authentication flow.
+
+---
+
+## Live Demo
+
+Frontend:
+https://mern-todo-app-ten-beta.vercel.app/
+
+Backend API:
+https://todo-backend-uzxl.onrender.com
 
 ---
 
 ## Features
 
-- User signup and login
-- JWT authentication with HTTP-only cookies
-- Protected routes
-- Create, update, delete todos
-- Per-user todo storage
-- Form validation using Zod
+### Authentication
+
+* User signup and login
+* JWT authentication using Bearer token
+* Token stored in localStorage
+* Protected routes using middleware
+* Axios interceptor support
+
+### Todo Management
+
+* Create todos
+* Fetch all user-specific todos
+* Mark todos as completed
+* Delete todos
+* Real-time UI updates
+
+### UI/UX
+
+* Clean modern UI (Tailwind CSS)
+* Responsive layout
+* Loading states
+* Error handling
+* Empty state handling
+* 404 Page
+
+---
+
+## Screenshots
+
+### Signup Page
+
+![Signup](./screenshots/signup.png)
+
+### Login Page
+
+![Login](./screenshots/login.png)
+
+### Todo Dashboard
+
+![Dashboard](./screenshots/tododashboard.png)
+
+---
+
+## Tech Stack
+
+### Frontend
+
+* React (Vite)
+* React Router
+* Axios
+* Tailwind CSS
+* React Hot Toast
+
+### Backend
+
+* Node.js
+* Express.js
+* MongoDB (Mongoose)
+* JSON Web Token (JWT)
+* Bcrypt.js
+* Zod (validation)
+
+### Deployment
+
+* Frontend: Vercel
+* Backend: Render
+* Database: MongoDB Atlas
 
 ---
 
 ## Project Structure
 
-- `backend/` – Express + MongoDB API
-  - `index.js` – App entry, MongoDB connection, CORS, routes
-  - `controller/` – Request handlers for users and todos
-  - `model/` – Mongoose models (`User`, `Todo`)
-  - `routes/` – Route definitions (`/user`, `/todo`)
-  - `middleware/authorize.js` – JWT-based auth middleware
-  - `jwt/token.js` – JWT generation and cookie handling
-  - `.env` – Environment variables (not committed)
-- `frontend/` – React client (Vite)
-  - `src/App.jsx` – Main routing
-  - `src/components/Home.jsx` – Todo list UI
-  - `src/components/Login.jsx` – Login form
-  - `src/components/Signup.jsx` – Signup form
-  - Other Vite/Tailwind/ESLint config files
+```
+todo-app
+│
+├── backend
+│   ├── controller
+│   ├── model
+│   ├── routes
+│   ├── middleware
+│   ├── jwt
+│   └── index.js
+│
+├── frontend
+│   ├── src
+│   │   ├── components
+│   │   │   ├── Home.jsx
+│   │   │   ├── Login.jsx
+│   │   │   ├── Signup.jsx
+│   │   │   └── PageNotFound.jsx
+│   │   ├── api
+│   │   ├── App.jsx
+│   │   └── main.jsx
+```
 
 ---
 
-## Prerequisites
+## API Endpoints
 
-- Node.js (LTS) and npm
-- MongoDB instance (local or cloud)
+### Auth Routes
 
----
-
-## Backend Setup (`backend/`)
-
-1. Install dependencies:
-
-   ```bash
-   cd backend
-   npm install
-   ```
-
-2. Create a `.env` file inside `backend/` with at least:
-
-   ```env
-   MONGODB_URI=<your_mongodb_connection_string>
-   JWT_SECRET_KEY=<any_strong_secret_key>
-   FRONTEND_URL=http://localhost:5173
-   PORT=4001
-   ```
-
-   Notes:
-   - `PORT` is set to `4001` so it matches the URLs used by the React frontend.
-   - `FRONTEND_URL` must match the URL where the Vite dev server runs.
-
-3. Start the backend server:
-
-   ```bash
-   npm start
-   ```
-
-   This runs `nodemon index.js` and starts the API at `http://localhost:4001`.
+| Method | Endpoint     | Description       |
+| ------ | ------------ | ----------------- |
+| POST   | /user/signup | Register new user |
+| POST   | /user/login  | Login user        |
+| POST   | /user/logout | Logout user       |
 
 ---
 
-## Frontend Setup (`frontend/`)
+### Todo Routes (Protected)
 
-1. Install dependencies:
-
-   ```bash
-   cd frontend
-   npm install
-   ```
-
-2. Start the React dev server:
-
-   ```bash
-   npm run dev
-   ```
-
-3. Open the URL printed by Vite in the terminal (usually `http://localhost:5173`).
-
-The frontend expects the backend to be available at `http://localhost:4001` with cookies enabled.
+| Method | Endpoint         | Description |
+| ------ | ---------------- | ----------- |
+| GET    | /todo/fetch      | Fetch todos |
+| POST   | /todo/create     | Create todo |
+| PUT    | /todo/update/:id | Update todo |
+| DELETE | /todo/delete/:id | Delete todo |
 
 ---
 
-## How Authentication Works
+## Authentication Flow
 
-- Users can **sign up** and **log in** from the React UI.
-- On successful signup/login, the backend:
-  - Creates or verifies the user in MongoDB.
-  - Generates a JWT and:
-    - Saves it to a `jwt` **HTTP-only cookie**.
-    - Returns it in the JSON response (frontend also stores it in `localStorage`).
-- Protected todo routes use the auth middleware, which:
-  - Reads the `jwt` cookie.
-  - Verifies it with `JWT_SECRET_KEY`.
-  - Loads the user from MongoDB and attaches it to `req.user`.
+* User signs up or logs in
 
-Logout clears the `jwt` cookie and removes the token from `localStorage` on the client.
+* Backend generates JWT token
 
----
+* Token is returned to frontend
 
-## API Overview
+* Token is stored in `localStorage`
 
-Base URL (with the configuration above):
+* For every request:
 
-- Backend: `http://localhost:4001`
+```
+Authorization: Bearer <token>
+```
 
-### Auth Routes (`/user`)
+* Backend middleware:
 
-- `POST /user/signup`
-  - Body: `{ "username": string, "email": string, "password": string }`
-  - Validates data with Zod, hashes password, creates user, returns JWT and user data.
+  * Verifies token
+  * Extracts user ID
+  * Grants access to protected routes
 
-- `POST /user/login`
-  - Body: `{ "email": string, "password": string }`
-  - Verifies credentials, returns JWT and user data, sets `jwt` cookie.
+* Logout:
 
-- `GET /user/logout`
-  - Clears the `jwt` cookie and logs out the user.
-
-### Todo Routes (`/todo`) – Protected
-
-These routes require a valid `jwt` cookie (user must be logged in).
-
-- `POST /todo/create`
-  - Body: `{ "text": string, "completed": boolean }`
-  - Creates a todo associated with the authenticated user.
-
-- `GET /todo/fetch`
-  - Returns all todos belonging to the authenticated user.
-
-- `PUT /todo/update/:id`
-  - Body: any fields to update (commonly toggling `completed`).
-  - Updates the todo with the given id.
-
-- `DELETE /todo/delete/:id`
-  - Deletes the todo with the given id.
+  * Removes token from localStorage
 
 ---
 
-## Frontend Behavior
+## Environment Variables
 
-- `/` – Home (Todo list)
-  - Protected route: redirects to `/login` if no JWT token is in `localStorage`.
-  - Shows todos, lets the user:
-    - Create todos
-    - Toggle completed status
-    - Delete todos
-    - See remaining todo count
-    - Logout
-- `/login` – Login page
-- `/signup` – Signup page
-- Any other path – 404 page
+### Backend `.env`
 
-All API calls are made with Axios and `withCredentials: true` so cookies are sent with requests.
+```
+PORT=4001
+MONGODB_URI=your_mongodb_connection
+JWT_SECRET_KEY=your_secret_key
+NODE_ENV=production
+```
+
+---
+
+## Installation
+
+### Clone Repository
+
+```
+git clone https://github.com/amruta7974/mern-todo-app.git
+```
+
+---
+
+### Backend Setup
+
+```
+cd backend
+npm install
+npm start
+```
+
+---
+
+### Frontend Setup
+
+```
+cd frontend
+npm install
+npm run dev
+```
 
 ---
 
@@ -176,42 +221,47 @@ All API calls are made with Axios and `withCredentials: true` so cookies are sen
 
 ### Backend
 
-From the `backend/` directory:
-
-- `npm start` – Start the server with nodemon.
+* npm start → run server
 
 ### Frontend
 
-From the `frontend/` directory:
-
-- `npm run dev` – Start the Vite dev server.
-- `npm run build` – Build for production.
-- `npm run preview` – Preview the built app.
-- `npm run lint` – Run ESLint.
+* npm run dev → start development server
+* npm run build → production build
+* npm run preview → preview build
 
 ---
 
+## Important Notes
 
-## Screenshots
+* Ensure MongoDB is running or Atlas URI is correct
+* Do not commit `.env` file
+* Update API base URL if backend changes
+* Make sure token is sent in headers for protected routes
 
-### Signup Page
-![Signup](./screenshots/signup.png)
+---
 
-### Login Page
-![Login](./screenshots/login.png)
+## Future Improvements
 
-### Todo Dashboard
-![Dashboard](./screenshots/tododashbooard.png)
-
-
-## Notes
-
-- Make sure MongoDB is running and the `MONGODB_URI` is valid.
-- Keep your `.env` file private and never commit it to version control.
-- If you change backend ports or URLs, update `.env` and/or frontend API URLs accordingly.
+* Refresh token implementation
+* Dark mode UI
+* Drag & drop todos
+* Search & filtering
+* Due dates and reminders
 
 ---
 
 ## Author
 
-Built by Amruta Gaikwad
+Amruta Gaikwad
+
+GitHub:
+https://github.com/amruta7974
+
+LinkedIn:
+(https://www.linkedin.com/in/amruta-gaikwad-945302315/)
+
+---
+
+## License
+
+This project is licensed under the MIT License.
